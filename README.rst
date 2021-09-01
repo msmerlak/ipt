@@ -9,7 +9,7 @@ ipt
    :target: https://travis-ci.org/kragniz/cookiecutter-pypackage-minimal
    :alt: Latest Travis CI build status
 
-An iterative eigensolver for perturbative (i.e. near-diagonal) matrices
+An iterative eigensolver for perturbative (i.e. near-diagonal) matrices.
 
 Usage
 -----
@@ -31,4 +31,4 @@ MIT
 Authors
 -------
 
-`ipt` was written by `Matteo Smerlak <smerlak@mis.mpg.de>`_.
+`ipt` was written by `Matteo Smerlak <smerlak@mis.mpg.de>`, in collaboration with Maxim Kenmoe, Anton Zadorin and Ronald Kriemann. 

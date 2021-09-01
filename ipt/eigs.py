@@ -2,7 +2,7 @@ import aa # Anderson acceleration from https://github.com/cvxgrp/aa
 import numpy as np
 import time
 
-def eigs(H, i = 0, v0 = None, mem = 10, maxiter = 1000, tol = 1e-12, quiet = True):
+def eigs(H, i = 0, return_eigenvector = False, v0 = None, mem = 10, maxiter = 1000, tol = 1e-12, quiet = True):
 
     dim = H.shape[0]
 
@@ -18,7 +18,7 @@ def eigs(H, i = 0, v0 = None, mem = 10, maxiter = 1000, tol = 1e-12, quiet = Tru
     # Unperturbed eigenvector (basis state)
     e = np.zeros(dim); e[i] = 1
 
-    # Q_IPT, eq. (3) in main text
+    # Q_IPT
     def Q(v, R0, H0):
         H0v = np.multiply(H0, v)
         H1v = H @ v - H0v
@@ -48,8 +48,10 @@ def eigs(H, i = 0, v0 = None, mem = 10, maxiter = 1000, tol = 1e-12, quiet = Tru
             break
 
         if not quiet:
+
             print('Iterations:',  l)
             print('Residual:',  err[-1])
+            print('----')
 
         # Anderson acceleration
         aa_wrk.apply(w, v)
@@ -58,4 +60,14 @@ def eigs(H, i = 0, v0 = None, mem = 10, maxiter = 1000, tol = 1e-12, quiet = Tru
     toc = time.time()
     timing = toc - tic
 
-    return({'iterations': l, 'time': timing, 'eigenvalue': E, 'eigenvector': v, 'residual' : err[-1]})
+    if return_eigenvector:
+        return E, v
+    else:
+        return E
+
+
+if __name__ == '__main__':
+
+    from matrices import *
+    test_matrix = perturbative_matrix(size = 100, density=1, epsilon=.1, symmetric=False)
+    eigs(test_matrix, return_eigenvector=True, quiet=False)
